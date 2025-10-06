@@ -47,7 +47,7 @@ This setup is zero-touch for developers — just push your code and everything h
 
 **2. GitHub Actions detects the change:**
 
-   - Workflow (```dev.yml```) automatically triggers on code push
+   - Workflow (```dev.yml``` / ```main.yml```) automatically triggers on code push
    - No manual run or approval is required
 
 **3. Python automation script runs:**
@@ -67,7 +67,7 @@ This setup is zero-touch for developers — just push your code and everything h
 ## 🧱 Layer Management (Simplified)
 All shared dependencies are stored in the ```layers/``` folder. Each layer has its own directory and ```package.json``` file.
 
-** ➕ Adding a New Layer**
+**➕ Adding a New Layer**
   1. Create a new folder inside ```layers/```:
   ```
   layers/<new-layer-name>/nodejs/package.json
@@ -84,28 +84,35 @@ All shared dependencies are stored in the ```layers/``` folder. Each layer has i
 
 No manual steps required.
 
-##🔄 Updating Existing Layer Dependencies
+
+**🔄 Updating Existing Layer Dependencies**
 
    - Just update the dependencies inside:
-     ```
-     layers/<existing-layer-name>/nodejs/package.json
-     ```
+     
+```
+layers/<existing-layer-name>/nodejs/package.json
+```
+   
    - Push your code — the workflow will automatically detect the update and redeploy the affected Lambda functions.
 
-##🧩 Function Layer Mapping (Example)
-Each Lambda function has a ```layers.txt``` file that declares which layers it uses.
+
+**🧩 Function Layer Mapping (Example)**
+
+   - Each Lambda function has a ```layers.txt``` file that declares which layers it uses.
 
 Example ```(functions/gst-service/layers.txt)```:
+
 ```
 aws-sdk-2.1520.0
 SecretManagerModule-2
 moment-2
 ```
+
 When you push code:
    - The script reads these entries
    - Automatically attaches corresponding layers during deployment
 
- **📄 Notes **
+ **📄 Notes**
 
    - Developers do not need to run any commands manually — no SAM CLI or AWS CLI execution required.
    - The **Python script + GitHub Actions** handle everything automatically.
@@ -113,7 +120,8 @@ When you push code:
    - Always keep ```template-base.yml``` as the master definition; ```template.yml``` is auto-generated.
 
    **In short:**
-      - 🧑‍💻 Developers just **write code and push changes.**
-      - 🤖 The system automatically **builds, updates layers, regenerates templates, and deploys** to AWS.
+   
+   - 🧑‍💻 Developers just **write code and push changes.**
+   - 🤖 The system automatically **builds, updates layers, regenerates templates, and deploys** to AWS.
 
 
