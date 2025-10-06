@@ -39,44 +39,48 @@ This repository hosts multiple Node.js-based AWS Lambda functions — each repre
 This setup is zero-touch for developers — just push your code and everything happens automatically.
 
 # 🔁 End-to-End Workflow
-1. Developer makes code changes
-    Update or add logic inside any function under functions/<function-name>/src/
-    If new dependencies are needed, follow the “Layer Management” section below
-    Commit and push to the branch (e.g., dev or main)
+**1. Developer makes code changes:**
+   
+   - Update or add logic inside any function under ``` functions/<function-name>/src/ ```
+   - If new dependencies are needed, follow the “Layer Management” section below
+   - Commit and push to the branch (e.g., ```dev``` or ```main```)
 
-2. GitHub Actions detects the change
-    Workflow (dev.yml) automatically triggers on code push
-    No manual run or approval is required
+**2. GitHub Actions detects the change:**
 
-3. Python automation script runs
-    Scans the functions/ directory for modified Lambda functions
-    Reads each function’s layers.txt to identify which layers it depends on
-    Auto-generates an updated template.yml from template-base.yml
-    Updates any new or modified layers inside layers/
-    Deploys only the changed Lambda functions to AWS
+   - Workflow (```dev.yml```) automatically triggers on code push
+   - No manual run or approval is required
 
-4. Deployment completed
-    The Lambda function(s) and corresponding layers are automatically updated in AWS
-    You can verify the success status under the Actions tab in GitHub
+**3. Python automation script runs:**
+
+   - Scans the ```functions/``` directory for modified Lambda functions
+   - Reads each function’s ```layers.txt``` to identify which layers it depends on
+   - Auto-generates an updated ```template.yml``` from ```template-base.yml```
+   - Updates any new or modified layers inside ```layers/```
+   - Deploys only the **changed Lambda functions** to AWS
+
+**4. Deployment completed:** 
+    
+   - The Lambda function(s) and corresponding layers are automatically updated in AWS
+   - You can verify the success status under the Actions tab in GitHub
 
 
 ## 🧱 Layer Management (Simplified)
-All shared dependencies are stored in the layers/ folder. Each layer has its own directory and package.json file.
+All shared dependencies are stored in the ```layers/``` folder. Each layer has its own directory and ```package.json``` file.
 
-# ➕ Adding a New Layer
-  1. Create a new folder inside layers/:
+**# ➕ Adding a New Layer**
+  1. Create a new folder inside ```layers/```:
   ```
   layers/<new-layer-name>/nodejs/package.json
    ```
 
-  2. Add required dependencies inside the package.json.
-  3. In the target Lambda function’s layers.txt, add the layer name:
+  2. Add required dependencies inside the ```package.json```.
+  3. In the target Lambda function’s ```layers.txt```, add the layer name:
   ```
     <new-layer-name>
   ```
   4. Push your changes — the system will automatically:
-      Create and deploy the new layer
-      Attach it to the relevant function
+    - Create and deploy the new layer
+    - Attach it to the relevant function
 
 No manual steps required.
 
